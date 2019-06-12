@@ -2,12 +2,21 @@
 
 const express = require('express')
 const api =  express.Router()
-const ProductCtrl = require('../controllers/product')
+const productCtrl = require('../controllers/product')
+const userCtrl = require('../controllers/user')
+const auth =  require('../middlewares/auth')
 
-api.get('/product', ProductCtrl.getProducts)
-api.get('/product/:productId', ProductCtrl.getProduct)
-api.post('/product', ProductCtrl.createProduct)
-api.put('/product/:productId', ProductCtrl.updateProduct)
-api.delete('/product/:productId', ProductCtrl.deleteProduct)
+api.get('/product', productCtrl.getProducts)
+api.get('/product/:productId', productCtrl.getProduct)
+api.post('/product', productCtrl.createProduct)
+api.put('/product/:productId', productCtrl.updateProduct)
+api.delete('/product/:productId', productCtrl.deleteProduct)
+
+api.post('/signup', userCtrl.signUp)
+api.post('/signin', userCtrl.signIn)
+
+api.get('/private', auth.isAuth, (req, res) => {
+  res.status(200).send({message: `Authorized user`})
+})
 
 module.exports = api
