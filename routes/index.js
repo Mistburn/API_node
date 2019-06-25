@@ -6,7 +6,7 @@ const productCtrl = require('../controllers/product')
 const userCtrl = require('../controllers/user')
 const auth =  require('../middlewares/auth')
 
-api.get('/product', productCtrl.getProducts)
+api.get('/product',  auth.isAuth, productCtrl.getProducts)
 api.get('/product/:productId', productCtrl.getProduct)
 api.post('/product', productCtrl.createProduct)
 api.put('/product/:productId', productCtrl.updateProduct)
